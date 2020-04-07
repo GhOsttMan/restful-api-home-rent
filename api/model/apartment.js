@@ -2,28 +2,28 @@ const mongoose = require("mongoose");
 
 const apartmentSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  apartmentId: String,
-  name: String,
-  description: String,
-  price: Number,
-  floor: Number,
+  apartmentId: { type: String, required: true },
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  floor: { type: Number, required: true },
 
   address: {
-    road: String,
-    city: String,
-    country: String
+    road: { type: String, required: true },
+    city: { type: String, required: true },
+    country: { type: String, required: true }
   },
   roomDetail: {
-    bedroom: Number,
-    dining: Number,
-    bathroom: Number,
-    kitchen: Boolean,
-    balcony: Number,
-    drawingroom: Number
+    bedroom: { type: Number, required: true },
+    dining: { type: Number, required: true },
+    bathroom: { type: Number, required: true },
+    kitchen: { type: Boolean, required: true },
+    balcony: { type: Number, required: true },
+    drawingroom: { type: Number, required: true }
   },
   mapCordination: {
-    lat: Number,
-    long: Number
+    lat: { type: Number, required: true },
+    long: { type: Number, required: true }
   }
 });
 

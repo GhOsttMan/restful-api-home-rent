@@ -77,7 +77,7 @@ route.post("/", (req, res, next) => {
       bathroom: req.body.bathroom,
       kitchen: req.body.kitchen,
       balcony: req.body.balcony,
-      drawingroom: req.body.drawing
+      drawingroom: req.body.drawingroom
     },
     mapCordination: {
       lat: req.body.lat,
@@ -97,7 +97,8 @@ route.post("/", (req, res, next) => {
     .catch(err => {
       console.log(err);
       res.status(500).json({
-        message: "Failed to create new entry"
+        message: "Failed to create new entry",
+        error: err
       });
     });
 });
@@ -119,6 +120,53 @@ route.delete("/:apartmentID", (req, res, next) => {
       res.status(500).json({
         msg: "fail to delete"
       });
+    });
+});
+
+// UPDATE  OPERATION
+route.patch("/:apartmentID", (req, res, next) => {
+  const id = req.params.apartmentID;
+  Apartment.update(
+    { apartmentId: id },
+    {
+      $set: {
+        name: req.body.name,
+        price: req.body.price,
+        floor: req.body.floor,
+        description: req.body.description,
+        address: {
+          road: req.body.road,
+          city: req.body.city,
+          country: req.body.country
+        },
+        roomDetail: {
+          bedroom: req.body.bedroom,
+          dining: req.body.dining,
+          bathroom: req.body.bathroom,
+          kitchen: req.body.kitchen,
+          balcony: req.body.balcony,
+          drawingroom: req.body.drawingroom
+        },
+        mapCordination: {
+          lat: req.body.lat,
+          long: req.body.long
+        }
+      }
+    }
+  )
+    .exec()
+    .then(doc => {
+      res
+        .status(200)
+        .json({
+          message: "Successfully Updated the data",
+          doc: doc
+        })
+        .catch(err => {
+          res.status(500).json({
+            message: "Something went wrong updating data"
+          });
+        });
     });
 });
 module.exports = route;
